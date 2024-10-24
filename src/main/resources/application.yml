@@ -1,0 +1,71 @@
+#spring:
+#  application:
+#    name: api-gateway
+#server:
+#  port: 5053
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
+#
+#routes:
+#  - id: user-service
+#    uri: lb://user-service
+#    predicates:
+#      - Path=/users/**
+#  - id: hotel-service
+#    uri: lb://hotel-service
+#    predicates:
+#      - Path=/hotel/**
+#  - id: rating-service
+#    uri: lb://rating-service
+#    predicates:
+#      - Path=/ratings/**
+
+
+
+server:
+  port: 5053
+
+eureka:
+  instance:
+    hostname: localhost
+
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://userservice
+          predicates:
+            - Path=/users/**
+        - id: hotel-service
+          uri: lb://hotelservice
+          predicates:
+            - Path=/hotel/**
+        - id: rating-service
+          uri: lb://rating-service
+          predicates:
+            - Path=/ratings/**
+
+  info:
+    app:
+      name: API Gateway Service
+      description: API Gateway for routing to user and contact services.
+      version: 1.0.0
+
+management:
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info, health
+
